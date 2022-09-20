@@ -1,23 +1,50 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import styled from 'styled-components';
+import Lists from './components/Lists';
+
+const LISTS = [
+  {
+    id: 1,
+    name: 'courses',
+    tasks: [
+      {
+        id: 1,
+        name: 'faire les courses',
+        status: true,
+      },
+      {
+        id: 2,
+        name: 'acheter de leau',
+        status: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: 'nouvelle liste',
+    tasks: [],
+  },
+];
 
 function App() {
+  const [lists, setLists] = useState([]);
+
+  const handleAddLists = () => {
+    const color = Math.floor(Math.random() * 16777215).toString(16);
+    const newLists = {
+      id: lists.length + 1,
+      name: 'nouvelle liste',
+      tasks: [],
+      color,
+    };
+    setLists([...lists, newLists]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={handleAddLists}>Add Lists</button>
+      <Lists lists={lists} setLists={setLists} />
     </div>
   );
 }
